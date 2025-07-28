@@ -1,26 +1,48 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import {
+  UnauthorizedException,
+  ConflictException,
+  Injectable,
+} from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { RegisterDto } from './dto/register.dto';
+import { LoginDto } from './dto/login.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { User, UserDocument } from './schemas/user.schema';
+import { comparePasswordHelper, hashPasswordHelper } from '@/helpers/util';
 
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
+  constructor(
+    private readonly jwtService: JwtService,
+    @InjectModel(User.name) private userModel: Model<UserDocument>
+  ) {}
+
+  async register(dto: RegisterDto) {
+    const { email, password } = dto;
+    const existing = await this.userModel.findOne({ email });
+    if (existing) throw new ConflictException('Email already registered');
+
+    const hashed: string = await hashPasswordHelper(password);
+    await this.userModel.create({
+      email,
+      password: hashed,
+    });
+    return { message: 'User registered successfully' };
   }
 
-  findAll() {
-    return `This action returns all auth`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
-
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+  async login(dto: LoginDto) {
+    const user = await this.userModel.findOne({ email: dto.email });
+    if (!user || !(await comparePasswordHelper(dto.password, user.password))) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+    const payload = { sub: user._id, email: user.email };
+    return {
+      user: {
+        _id: user._id,
+        email: user.email,
+      },
+      access_token: this.jwtService.sign(payload),
+    };
   }
 }

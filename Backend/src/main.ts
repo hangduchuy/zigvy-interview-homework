@@ -1,9 +1,20 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { ConfigService } from '@nestjs/config';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const configService = app.get(ConfigService);
+  const port: number = configService.get('PORT') || 3000;
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    })
+  );
 
   // Cấu hình Swagger
   const config = new DocumentBuilder()
@@ -13,9 +24,9 @@ async function bootstrap() {
     .addBearerAuth() // Cho phép xác thực JWT trong Swagger UI
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api-docs', app, document);
+  SwaggerModule.setup('docs', app, document);
 
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(port);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
