@@ -16,6 +16,11 @@ async function bootstrap() {
     })
   );
 
+  app.enableCors({
+    origin: configService.get('FRONTEND_URL'), // hoặc cổng React app
+    credentials: true,
+  });
+
   // Cấu hình Swagger
   const config = new DocumentBuilder()
     .setTitle('ZigTask API')
