@@ -8,11 +8,13 @@ ZigTask là giao diện web để người dùng quản lý các công việc. C
 
 1. Clone repo
 
-git clone https://github.com/hangduchuy/zigtask-client.git
-cd zigtask-client
+git clone https://github.com/hangduchuy/zigvy-interview-homework.git
+cd zigvy-interview-homework
+cd Frontend
 
 2. Cài đặt dependencies
 
+Node: 20.14.0
 npm install
 
 3. Khởi chạy dev
