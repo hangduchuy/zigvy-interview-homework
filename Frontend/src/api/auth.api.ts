@@ -12,10 +12,10 @@ export const loginAPI = async (email: string, password: string) => {
   return res.data; // chứa access_token
 };
 
-export const getProfile = async () => {
-  const token = localStorage.getItem("token");
-  const res = await axios.get(`${API_URL}/profile`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  return res.data;
-};
+// export const getProfile = async () => {
+//   const token = localStorage.getItem("token");
+//   const res = await axios.get(`${API_URL}/profile`, {
+//     headers: { Authorization: `Bearer ${token}` },
+//   });
+//   return res.data;
+// };

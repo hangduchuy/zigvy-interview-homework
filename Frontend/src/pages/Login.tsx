@@ -3,6 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Form, Input, Button, Typography, message } from "antd";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const { Title } = Typography;
 
@@ -15,7 +16,7 @@ const Login = () => {
       await login(values.email, values.password);
       navigate("/");
     } catch (err) {
-      message.error("Login failed");
+      toast.error("Login failed");
     }
   };
 
