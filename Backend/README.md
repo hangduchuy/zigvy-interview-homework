@@ -8,8 +8,9 @@ ZigTask API là hệ thống quản lý công việc với xác thực người 
 
 1. Clone repo
 
-git clone https://github.com/hangduchuy/zigtask-api.git
-cd zigtask-api
+git clone https://github.com/hangduchuy/zigvy-interview-homework.git
+cd zigvy-interview-homework
+cd Backend
 
 2. Cài đặt dependencies
 
