@@ -1,69 +1,40 @@
-# React + TypeScript + Vite
+🖥️ ZigTask Client (Frontend - React + TS + Ant Design)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+📌 Project Overview
 
-Currently, two official plugins are available:
+ZigTask là giao diện web để người dùng quản lý các công việc. Các task được nhóm theo trạng thái và hỗ trợ drag-and-drop, lọc theo thời gian và tìm kiếm tiêu đề, sạch sẽ, Sign up / Sign in, thông báo cảnh báo khi task còn 1 tiếng.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+⚙️ Setup & Run Instructions
 
-## Expanding the ESLint configuration
+1. Clone repo
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+git clone https://github.com/hangduchuy/zigtask-client.git
+cd zigtask-client
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+2. Cài đặt dependencies
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+npm install
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+3. Khởi chạy dev
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+npm run dev
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Yêu cầu: Backend chạy ở http://localhost:3000
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+🧠 Decisions & Trade-offs
+
+Sử dụng Context API thay vì Redux để giảm boilerplate cho ứng dụng nhỏ.
+
+Ant Design giúp build giao diện nhanh, đồng thời có hỗ trợ tốt về UX/UI.
+
+Drag-and-drop dùng @hello-pangea/dnd do dễ dùng và lightweight hơn so với react-beautiful-dnd.
+
+Tối ưu UX bằng optimistic update và toast thông báo khi task gần đến hạn.
+
+📸 Screenshots
+
+![alt text](image.png)
+
+📘 API Swagger Docs
+
+Tại backend: http://localhost:3000/docs
